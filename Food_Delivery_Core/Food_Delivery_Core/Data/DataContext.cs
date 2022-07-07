@@ -13,12 +13,19 @@ namespace Food_Delivery_Core.Data
         public DbSet<Restaurant> Restoraunts { get; set; }
         public DbSet<Dish> Dishes { get; set; }
 
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+
         public DataContext() : base() { }
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
             _options = options;
         }
 
-         
+         protected override void OnModelCreating(ModelBuilder mb)
+        {
+            base.OnModelCreating(mb);
+            mb.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
+        }
     }
 }

@@ -4,6 +4,7 @@ using Food_Delivery_Core.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Food_Delivery_Core.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220707143751_AnotherMigration")]
+    partial class AnotherMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,38 +57,15 @@ namespace Food_Delivery_Core.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<string>("Comment")
+                    b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("DelivererId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("DeliveryId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("OrdererId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("RestorauntId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("TimeOfOrder")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DelivererId");
+                    b.ToTable("Order");
 
-                    b.HasIndex("OrdererId");
-
-                    b.HasIndex("RestorauntId");
-
-                    b.ToTable("Orders");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Order");
                 });
 
             modelBuilder.Entity("Food_Delivery_Core.Models.OrderItem", b =>
@@ -175,6 +154,77 @@ namespace Food_Delivery_Core.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Food_Delivery_Core.Models.AvailableOrder", b =>
+                {
+                    b.HasBaseType("Food_Delivery_Core.Models.Order");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("OrdererId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RestorauntId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RestourantId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("TimeOfOrder")
+                        .HasColumnType("datetime2");
+
+                    b.HasIndex("OrdererId");
+
+                    b.HasIndex("RestorauntId");
+
+                    b.HasDiscriminator().HasValue("AvailableOrder");
+                });
+
+            modelBuilder.Entity("Food_Delivery_Core.Models.TakenOrder", b =>
+                {
+                    b.HasBaseType("Food_Delivery_Core.Models.Order");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TakenOrder_Comment");
+
+                    b.Property<long>("DelivererId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("DeliveryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("OrdererId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("TakenOrder_OrdererId");
+
+                    b.Property<long>("RestorauntId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("TakenOrder_RestorauntId");
+
+                    b.Property<long>("RestourantId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("TakenOrder_RestourantId");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TimeOfOrder")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("TakenOrder_TimeOfOrder");
+
+                    b.HasIndex("DelivererId");
+
+                    b.HasIndex("OrdererId");
+
+                    b.HasIndex("RestorauntId");
+
+                    b.HasDiscriminator().HasValue("TakenOrder");
+                });
+
             modelBuilder.Entity("Food_Delivery_Core.Models.Dish", b =>
                 {
                     b.HasOne("Food_Delivery_Core.Models.Restaurant", "restoraunt")
@@ -184,31 +234,6 @@ namespace Food_Delivery_Core.Migrations
                         .IsRequired();
 
                     b.Navigation("restoraunt");
-                });
-
-            modelBuilder.Entity("Food_Delivery_Core.Models.Order", b =>
-                {
-                    b.HasOne("Food_Delivery_Core.Models.User", "Deliverer")
-                        .WithMany()
-                        .HasForeignKey("DelivererId");
-
-                    b.HasOne("Food_Delivery_Core.Models.User", "Orderer")
-                        .WithMany()
-                        .HasForeignKey("OrdererId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Food_Delivery_Core.Models.Restaurant", "Restoraunt")
-                        .WithMany()
-                        .HasForeignKey("RestorauntId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Deliverer");
-
-                    b.Navigation("Orderer");
-
-                    b.Navigation("Restoraunt");
                 });
 
             modelBuilder.Entity("Food_Delivery_Core.Models.OrderItem", b =>
@@ -228,6 +253,52 @@ namespace Food_Delivery_Core.Migrations
                     b.Navigation("FoodItem");
 
                     b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("Food_Delivery_Core.Models.AvailableOrder", b =>
+                {
+                    b.HasOne("Food_Delivery_Core.Models.User", "Orderer")
+                        .WithMany()
+                        .HasForeignKey("OrdererId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Food_Delivery_Core.Models.Restaurant", "Restoraunt")
+                        .WithMany()
+                        .HasForeignKey("RestorauntId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Orderer");
+
+                    b.Navigation("Restoraunt");
+                });
+
+            modelBuilder.Entity("Food_Delivery_Core.Models.TakenOrder", b =>
+                {
+                    b.HasOne("Food_Delivery_Core.Models.User", "Deliverer")
+                        .WithMany()
+                        .HasForeignKey("DelivererId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Food_Delivery_Core.Models.User", "Orderer")
+                        .WithMany()
+                        .HasForeignKey("OrdererId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Food_Delivery_Core.Models.Restaurant", "Restoraunt")
+                        .WithMany()
+                        .HasForeignKey("RestorauntId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Deliverer");
+
+                    b.Navigation("Orderer");
+
+                    b.Navigation("Restoraunt");
                 });
 
             modelBuilder.Entity("Food_Delivery_Core.Models.Order", b =>

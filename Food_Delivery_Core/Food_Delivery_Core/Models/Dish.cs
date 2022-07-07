@@ -7,7 +7,7 @@
 
         public  int Price { get; set; }
 
-        public int RestaurantId { get; set; }
+        public long RestaurantId { get; set; }
 
         public Restaurant restoraunt { get; set; }
       

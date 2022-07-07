@@ -4,6 +4,7 @@ using Food_Delivery_Core.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Food_Delivery_Core.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220707150605_TheRightMigration")]
+    partial class TheRightMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,16 +61,19 @@ namespace Food_Delivery_Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("DelivererId")
+                    b.Property<long>("DelivererId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("DeliveryId")
+                    b.Property<long>("DeliveryId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("OrdererId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("RestorauntId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RestourantId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Status")
@@ -190,12 +195,14 @@ namespace Food_Delivery_Core.Migrations
                 {
                     b.HasOne("Food_Delivery_Core.Models.User", "Deliverer")
                         .WithMany()
-                        .HasForeignKey("DelivererId");
+                        .HasForeignKey("DelivererId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Food_Delivery_Core.Models.User", "Orderer")
                         .WithMany()
                         .HasForeignKey("OrdererId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Food_Delivery_Core.Models.Restaurant", "Restoraunt")
