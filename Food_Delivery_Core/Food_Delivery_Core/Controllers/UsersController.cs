@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Food_Delivery_Core.Data;
 using Food_Delivery_Core.Models;
+using Food_Delivery_Core.DTO;
 
 namespace Food_Delivery_Core.Controllers
 {
@@ -31,6 +32,7 @@ namespace Food_Delivery_Core.Controllers
           }
             return await _context.Users.ToListAsync();
         }
+
 
         // GET: api/Users/5
         [HttpGet("{id}")]
@@ -84,17 +86,52 @@ namespace Food_Delivery_Core.Controllers
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<User>> RegisterUser(RegisterDto user)
         {
           if (_context.Users == null)
           {
               return Problem("Entity set 'DataContext.Users'  is null.");
           }
-            _context.Users.Add(user);
+            var b = (_context.Users?.Any(e => e.Username == user.Username)).GetValueOrDefault();
+            if(b)
+            {
+                return Problem("Another User with that Username exists");
+            }
+            User newUser = new User(user);
+            
+            _context.Users.Add(newUser);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction("GetUser", new { id = newUser.Id }, user);
         }
+
+
+        [HttpPost("/Login")]
+        public async Task<ActionResult<string>> Login(UserLoginDto user)
+        {
+            if (_context.Users == null)
+            {
+                return NotFound();
+            }
+
+            var users = _context.Users;
+            User? u = null;
+            u = users.Where(o => o.Username == user.Username && o.Password.GetHashCode().ToString() == user.Password).First();
+         
+            if (u == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(u.UserType);
+        }
+
+       
+
+
+
+
+
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]

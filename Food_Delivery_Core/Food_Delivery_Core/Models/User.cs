@@ -1,4 +1,6 @@
-﻿namespace Food_Delivery_Core.Models
+﻿using Food_Delivery_Core.DTO;
+
+namespace Food_Delivery_Core.Models
 {
     public class User
     {
@@ -17,6 +19,22 @@
 
         public bool IsVerified  { get; set; }
 
+        public User()
+        {
+
+        }
+        public User (RegisterDto data)
+        {
+            Id = 0;
+            Username = data.Username;
+            Password = data.Password.GetHashCode().ToString();
+            Adress = data.Adress;
+            UserType = data.UserType;
+            DoB = data.DoB;
+            FullName = data.FullName;
+            Email = data.Email;
+            IsVerified = false;
+        }
 
     }
 }
