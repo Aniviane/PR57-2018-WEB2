@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Food_Delivery_Core.Data;
 using Food_Delivery_Core.Models;
+using Food_Delivery_Core.DTO;
 
 namespace Food_Delivery_Core.Controllers
 {
@@ -84,16 +85,17 @@ namespace Food_Delivery_Core.Controllers
         // POST: api/Restaurants
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Restaurant>> PostRestaurant(Restaurant restaurant)
+        public async Task<ActionResult<Restaurant>> PostRestaurant(RestaurantDTO restaurant)
         {
           if (_context.Restoraunts == null)
           {
               return Problem("Entity set 'DataContext.Restoraunts'  is null.");
           }
-            _context.Restoraunts.Add(restaurant);
+            Restaurant newRestaurant = new Restaurant(restaurant);
+            _context.Restoraunts.Add(newRestaurant);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRestaurant", new { id = restaurant.Id }, restaurant);
+            return CreatedAtAction("GetRestaurant", new { id = newRestaurant.Id }, newRestaurant);
         }
 
         // DELETE: api/Restaurants/5

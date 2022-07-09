@@ -23,7 +23,7 @@ namespace Food_Delivery_Core.Models
         {
 
         }
-        public User (RegisterDto data)
+        public User (RegisterDTO data)
         {
             Id = 0;
             Username = data.Username;

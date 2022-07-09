@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Food_Delivery_Core.Data;
 using Food_Delivery_Core.Models;
+using Food_Delivery_Core.DTO;
 
 namespace Food_Delivery_Core.Controllers
 {
@@ -84,16 +85,22 @@ namespace Food_Delivery_Core.Controllers
         // POST: api/Orders
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        public async Task<ActionResult<Order>> PostOrder(OrderDTO order)
         {
           if (_context.Orders == null)
           {
               return Problem("Entity set 'DataContext.Orders'  is null.");
           }
-            _context.Orders.Add(order);
+            Order newOrder = new Order(order);
+            _context.Orders.Add(newOrder);
+            foreach(var v in newOrder.Dishes)
+            {
+                v.OrderId = newOrder.Id;
+                _context.OrderItems.Add(v);
+            }
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrder", new { id = order.Id }, order);
+            return CreatedAtAction("GetOrder", new { id = newOrder.Id }, newOrder);
         }
 
         // DELETE: api/Orders/5

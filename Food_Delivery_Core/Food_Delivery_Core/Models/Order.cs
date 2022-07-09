@@ -1,4 +1,6 @@
-﻿namespace Food_Delivery_Core.Models
+﻿using Food_Delivery_Core.DTO;
+
+namespace Food_Delivery_Core.Models
 {
     public class Order
     {
@@ -28,5 +30,26 @@
 
         public Restaurant Restoraunt { get; set; }
 
+
+        public Order()
+        {
+
+        }
+
+        public Order(OrderDTO dto)
+        {
+            Id = 0;
+            OrdererId = dto.OrdererId;
+            Status = "Available";
+            RestorauntId = dto.RestorauntId;
+            Comment = dto.Comment;
+            TimeOfOrder = dto.TimeOfOrder;
+            Dishes = new List<OrderItem>();
+            foreach(var dtos in dto.OrderItems)
+            {
+                OrderItem OI = new OrderItem(dtos);
+                Dishes.Add(OI);
+            }
+        }
     }
 }

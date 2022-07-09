@@ -1,4 +1,6 @@
-﻿namespace Food_Delivery_Core.Models
+﻿using Food_Delivery_Core.DTO;
+
+namespace Food_Delivery_Core.Models
 {
     public class Restaurant
     {
@@ -10,6 +12,14 @@
 
         public List<Dish> Menu { get; set; }
 
-
+        public Restaurant() { }
+         
+        public Restaurant(RestaurantDTO dto)
+        {
+            Id = 0;
+            RestName = dto.RestName;
+            Stars = dto.Stars;
+            Menu = new List<Dish>();
+        }
     }
 }
