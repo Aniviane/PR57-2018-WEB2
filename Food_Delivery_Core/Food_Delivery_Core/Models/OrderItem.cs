@@ -21,7 +21,7 @@ namespace Food_Delivery_Core.Models
         
         public OrderItem(OrderItemDTO dto)
         {
-            Id = 0;
+            
             DishId = dto.DishId;
             OrderId = dto.OrderId;
             DishComment = dto.DishComment;

@@ -2,6 +2,7 @@
 {
     public class RestaurantDTO
     {
+        public long Id { get; set; }
         public string RestName { get; set; }
 
         public int Stars { get; set; }

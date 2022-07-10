@@ -8,8 +8,6 @@ namespace Food_Delivery_Core.Services.Interfaces
 
         RestaurantDTO AddRestaurant(RestaurantDTO restaurantDTO);
 
-        RestaurantDTO UpdateRestaurant(long id, RestaurantDTO restaurantDTO);
-
         void DeleteRestaurant(long Id);
     }
 }

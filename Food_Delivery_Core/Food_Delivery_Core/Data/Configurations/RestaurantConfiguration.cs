@@ -10,7 +10,6 @@ namespace Food_Delivery_Core.Data.Configurations
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
-            builder.HasMany(x => x.Menu).WithOne(x => x.restoraunt).HasForeignKey(x => x.RestaurantId);
-        }
+            }
     }
 }

@@ -8,7 +8,6 @@ namespace Food_Delivery_Core.Services.Interfaces
 
         OrderDTO AddOrder(OrderDTO Order);
 
-        OrderDTO UpdateOrder(long id, OrderDTO Order);
 
         void DeleteOrder(long Id);
     }

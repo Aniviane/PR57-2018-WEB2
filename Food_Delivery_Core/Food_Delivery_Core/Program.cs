@@ -15,6 +15,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserInterface, UserService>();
+builder.Services.AddScoped<IRestaurantInterface, RestaurantService>();
+builder.Services.AddScoped<IOrderInterface, OrderService>();
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(Config.GetConnectionString("CS")));
 var mapperConfig = new MapperConfiguration(mc =>
 {

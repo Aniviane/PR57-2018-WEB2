@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Food_Delivery_Core.Data;
 using Food_Delivery_Core.Models;
 using Food_Delivery_Core.DTO;
+using Food_Delivery_Core.Services;
+using Food_Delivery_Core.Services.Interfaces;
 
 namespace Food_Delivery_Core.Controllers
 {
@@ -15,117 +17,79 @@ namespace Food_Delivery_Core.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly DataContext _context;
+       
+        private readonly IOrderInterface _orderService;
 
-        public OrdersController(DataContext context)
+        public OrdersController( IOrderInterface orderInterface)
         {
-            _context = context;
+            
+            _orderService = orderInterface;
         }
 
         // GET: api/Orders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
+        public ActionResult<IEnumerable<OrderDTO>> GetOrders()
         {
-          if (_context.Orders == null)
-          {
-              return NotFound();
-          }
-            return await _context.Orders.ToListAsync();
+            return Ok(_orderService.GetOrders());
         }
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrder(long id)
+        public ActionResult<OrderDTO> GetOrder(long id)
         {
-          if (_context.Orders == null)
-          {
-              return NotFound();
-          }
-            var order = await _context.Orders.FindAsync(id);
 
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            return order;
+            return Ok(_orderService.GetById(id));
         }
 
-        // PUT: api/Orders/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder(long id, Order order)
-        {
-            if (id != order.Id)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/Orders/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutOrder(long id, Order order)
+        //{
+        //    if (id != order.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(order).State = EntityState.Modified;
+        //    _context.Entry(order).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!OrderExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         // POST: api/Orders
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(OrderDTO order)
+        public ActionResult<OrderDTO> PostOrder(OrderDTO order)
         {
-          if (_context.Orders == null)
-          {
-              return Problem("Entity set 'DataContext.Orders'  is null.");
-          }
-            Order newOrder = new Order(order);
-            _context.Orders.Add(newOrder);
-            foreach(var v in newOrder.Dishes)
-            {
-                v.OrderId = newOrder.Id;
-                _context.OrderItems.Add(v);
-            }
-            await _context.SaveChangesAsync();
+            return Ok(_orderService.AddOrder(order));
 
-            return CreatedAtAction("GetOrder", new { id = newOrder.Id }, newOrder);
+           
         }
 
         // DELETE: api/Orders/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrder(long id)
+        public IActionResult DeleteOrder(long id)
         {
-            if (_context.Orders == null)
-            {
-                return NotFound();
-            }
-            var order = await _context.Orders.FindAsync(id);
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            _orderService.DeleteOrder(id);
+            return Ok();
         }
 
-        private bool OrderExists(long id)
-        {
-            return (_context.Orders?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+       
     }
 }

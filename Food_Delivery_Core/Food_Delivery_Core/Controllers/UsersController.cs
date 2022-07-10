@@ -18,12 +18,12 @@ namespace Food_Delivery_Core.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly DataContext _context;
+        
         private readonly IUserInterface _userService;
 
-        public UsersController(DataContext context, IUserInterface userInterface)
+        public UsersController( IUserInterface userInterface)
         {
-            _context = context;
+           
             _userService = userInterface;
         }
 

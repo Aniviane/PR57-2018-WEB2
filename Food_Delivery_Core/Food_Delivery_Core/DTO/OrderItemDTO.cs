@@ -2,7 +2,7 @@
 {
     public class OrderItemDTO
     {
-      
+        public long Id { get; set; }
         public long DishId { get; set; }
         public long OrderId { get; set; }
 
