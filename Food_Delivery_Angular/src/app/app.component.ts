@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { IdentifyComponent } from './Components/identify/identify.component';
+
 
 @Component({
   selector: 'app-root',
