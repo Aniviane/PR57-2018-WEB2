@@ -11,6 +11,8 @@ namespace Food_Delivery_Core.Services.Interfaces
 
         RegisterDTO UpdateUser(long id, RegisterDTO register);
 
+        void VerifyUser(long id);
+
         void DeleteUser(long Id);
     }
 }

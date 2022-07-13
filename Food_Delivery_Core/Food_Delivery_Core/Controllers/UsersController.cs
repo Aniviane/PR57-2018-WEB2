@@ -10,7 +10,7 @@ using Food_Delivery_Core.Models;
 using Food_Delivery_Core.DTO;
 using Food_Delivery_Core.Services;
 using Food_Delivery_Core.Services.Interfaces;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Food_Delivery_Core.Controllers
 {
@@ -140,8 +140,14 @@ namespace Food_Delivery_Core.Controllers
             return Ok(_userService.Login(user));
         }
 
-       
 
+        [HttpPut("/Users/Verify/{id}")]
+        [Authorize(Roles = "Admin")]
+        public ActionResult VerifyUser(long id)
+        {
+            _userService.VerifyUser(id);
+            return Ok();
+        }
 
 
 
@@ -149,6 +155,7 @@ namespace Food_Delivery_Core.Controllers
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(long id) { 
         //{
         //    if (_context.Users == null)

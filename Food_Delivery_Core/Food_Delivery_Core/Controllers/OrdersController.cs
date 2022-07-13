@@ -10,6 +10,7 @@ using Food_Delivery_Core.Models;
 using Food_Delivery_Core.DTO;
 using Food_Delivery_Core.Services;
 using Food_Delivery_Core.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Food_Delivery_Core.Controllers
 {
@@ -90,6 +91,13 @@ namespace Food_Delivery_Core.Controllers
             return Ok();
         }
 
+
+        [HttpPut, Authorize]
+        public IActionResult UpdateOrder(UpdateOrderDTO dto)
+        {
+            _orderService.UpdateOrder(dto);
+            return Ok();
+        }
        
     }
 }

@@ -1,0 +1,18 @@
+<p>orderer works! {{Id}}</p>
+
+
+
+<div>
+   <table class="table table-striped">
+    <tr *ngFor="let rest of Restaurants|async">
+        <td>{{rest.restName}}</td>
+        <td>{{rest.stars}}</td>
+        <button (click)="orderFrom(rest.id)">Order From This restaurant</button>
+    </tr>
+   </table>
+
+
+</div>
+
+
+

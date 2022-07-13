@@ -6,11 +6,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IdentifyComponent } from './Components/identify/identify.component';
 import { UserServiceService } from './Services/user-service.service';
+import { OrdererComponent } from './Components/orderer/orderer.component';
+import { DelivererComponent } from './Components/deliverer/deliverer.component';
+import { AdminComponent } from './Components/admin/admin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    IdentifyComponent
+    IdentifyComponent,
+    OrdererComponent,
+    DelivererComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

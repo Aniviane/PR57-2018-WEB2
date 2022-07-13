@@ -12,6 +12,8 @@
         public DateTime TimeOfOrder { get; set; }
 
         public string Comment { get; set; }
+        public string Status { get; set; }
+
 
         public List<OrderItemDTO> OrderItems { get; set;}
     }

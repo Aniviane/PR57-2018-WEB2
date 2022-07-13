@@ -18,6 +18,7 @@ namespace Food_Delivery_Core.Controllers
     public class RestaurantsController : ControllerBase
     {
         
+
         private readonly IRestaurantInterface _restaurantService;
 
         public RestaurantsController( IRestaurantInterface restaurantInterface)

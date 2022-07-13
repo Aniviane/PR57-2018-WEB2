@@ -4,6 +4,7 @@ using Food_Delivery_Core.Mapping;
 using Food_Delivery_Core.Data;
 using Food_Delivery_Core.Services.Interfaces;
 using AutoMapper;
+using System.Security.Claims;
 
 namespace Food_Delivery_Core.Services
 {
@@ -11,11 +12,13 @@ namespace Food_Delivery_Core.Services
     {
         private readonly IMapper _mapper;
         private readonly DataContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public OrderService(IMapper mapper, DataContext context)
+        public OrderService(IMapper mapper, DataContext context, IHttpContextAccessor httpContextAccessor)
         {
             _mapper = mapper;
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public OrderDTO AddOrder(OrderDTO Order)
@@ -86,7 +89,27 @@ namespace Food_Delivery_Core.Services
             return ret;
 
         }
+        
+        public void UpdateOrder(UpdateOrderDTO dto)
+        {
+            if (_httpContextAccessor != null)
+            {
+                long deliveryId = long.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.SerialNumber));
+                if (dto.mode == 1)
+                {//Accept Order
+                    var order = _context.Orders.Where(o => o.Id == dto.orderId).First();
+                    order.DeliveryId = deliveryId;
+                    order.Status = "Accepted";
+                    _context.SaveChanges();
+                }
+                else
+                {//Finalize order
+                    var order = _context.Orders.Where(o => o.Id == dto.orderId).First();
+                    order.Status = "Delivered";
+                    _context.SaveChanges();
+                }
 
-       
+            }
+        }
     }
 }

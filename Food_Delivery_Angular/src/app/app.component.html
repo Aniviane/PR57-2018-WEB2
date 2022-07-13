@@ -1,4 +1,93 @@
-<div class="container">
- <app-identify></app-identify>
- 
+<div class="container" >
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+  Login
+</button>
+
+
+
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#RegisterModal">
+  Register
+</button>
 </div>
+
+<app-identify *ngIf="UserType == 'NoUser'"></app-identify>
+<app-orderer [Id]="Id" *ngIf="UserType == 'Orderer'"></app-orderer>
+<app-admin [Id]="Id" *ngIf="UserType == 'Admin'"></app-admin>
+<app-deliverer [Id]="Id" *ngIf="UserType == 'Deliverer'"></app-deliverer>
+
+
+
+
+
+<!-- LOGINModal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Please enter your credentials</p>
+
+        <form>
+          <label>Username: </label>
+          <input type="text" #User name="Username"><br>
+          <label>Password: </label>
+          <input type="password" #pass name="password"><br>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="Login(User.value,pass.value)">Login</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- RegisterModal -->
+<div class="modal fade" id="RegisterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Please enter your registration credentials</p>
+
+        <form>
+          <label>Username: </label>
+          <input type="text" #user ><br>
+          <label>Password: </label>
+          <input type="password" #pass ><br>
+          <label>Confirm Password: </label>
+          <input type="password" #conf><br>
+          <label>Email: </label>
+          <input type="email" #mail><br>
+          <label>Full Name: </label>
+          <input type="text" #fname ><br>
+          <label>Adress: </label>
+          <input type="text" #adress ><br>
+          <label>Birthday: </label>
+          <input type="number" #day placeholder="DD"><p>:</p>
+          <input type="number" #month placeholder="MM"><p>:</p>
+          <input type="number" #year placeholder="YYYY"><br>
+          <label>What type of user do you want to be?</label>
+          <select #type>
+              <option>Orderer</option>
+              <option>Deliverer</option>
+          </select>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="Register(user.value,pass.value,conf.value,mail.value,fname.value,adress.value,day.valueAsNumber,month.valueAsNumber,year.valueAsNumber,type.value)">Registration</button>
+      </div>
+    </div>
+  </div>
+</div>
+
