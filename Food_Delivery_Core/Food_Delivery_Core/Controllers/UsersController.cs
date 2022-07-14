@@ -96,7 +96,7 @@ namespace Food_Delivery_Core.Controllers
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<RegisterDTO>> RegisterUser(RegisterDTO user)
+        public async Task<ActionResult<RegisterDTO>> RegisterUser([FromBody] RegisterDTO user)
         {
             //if (_context.Users == null)
             //{
@@ -114,12 +114,14 @@ namespace Food_Delivery_Core.Controllers
 
             //  return CreatedAtAction("GetUser", new { id = newUser.Id }, user);
 
+            if (user.Password != user.ConfirmPassword) return Problem("Your passwords do not match!");
+
             return Ok(_userService.AddUser(user));
         }
 
 
         [HttpPost("/Login")]
-        public async Task<ActionResult<string>> Login(UserLoginDto user)
+        public async Task<ActionResult<string>> Login([FromBody] UserLoginDto user)
         {
             //if (_context.Users == null)
             //{

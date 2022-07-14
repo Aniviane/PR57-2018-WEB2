@@ -1,27 +1,29 @@
 
 
 export class RegisterDTO {
-    Id : number;
-    Username : string;
-    Password : string;
-    ConfirmPassword : string;
+    id : number;
+    username : string;
+    password : string;
+    confirmPassword : string;
     
     email : string;
-    FullName : string;
-    Adress : string;
-    DateOfBirth : Date;
-    UserType : string;
+    fullName : string;
+    adress : string;
+    doB : Date;
+    userType : string;
+    isVerified : boolean;
 
-    constructor(username:string, password :string, conf:string, mail:string, fname : string, adress:string, date:Date, utype:string) {
-        this.Id = 0;
-        this.Username = username;
-        this.Password = password;
-        this.ConfirmPassword = conf;
+    constructor(username:string, password :string, conf:string, mail:string, fname : string, adress:string, date:Date, utype:string, ver:boolean) {
+        this.id = 0;
+        this.username = username;
+        this.password = password;
+        this.confirmPassword = conf;
         this.email = mail;
-        this.FullName = fname;
-        this.Adress = adress;
-        this.DateOfBirth = date;
-        this.UserType = utype;
+        this.fullName = fname;
+        this.adress = adress;
+        this.doB = date;
+        this.userType = utype;
+        this.isVerified = ver;
 
     }
 

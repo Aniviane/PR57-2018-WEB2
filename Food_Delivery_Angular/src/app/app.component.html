@@ -18,7 +18,7 @@
 <app-deliverer [Id]="Id" *ngIf="UserType == 'Deliverer'"></app-deliverer>
 
 
-
+<button (click)="LogOut()" class="btn btn-primary"> Log Out</button>
 
 
 <!-- LOGINModal -->
@@ -73,8 +73,8 @@
           <label>Adress: </label>
           <input type="text" #adress ><br>
           <label>Birthday: </label>
-          <input type="number" #day placeholder="DD"><p>:</p>
-          <input type="number" #month placeholder="MM"><p>:</p>
+          <input type="number" #day placeholder="DD">
+          <input type="number" #month placeholder="MM">
           <input type="number" #year placeholder="YYYY"><br>
           <label>What type of user do you want to be?</label>
           <select #type>

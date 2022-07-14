@@ -14,20 +14,23 @@ export class OrderDTO {
 
     // public List<OrderItemDTO> OrderItems { get; set;}
 
-    Id:number;
-    OrdererId:number;
-    DeliveryId:number;
-    RestaurantId:number;
-    TimeOfOrder:Date;
-    Comment: string;
-    OrderItems: OrderItemDTO[];
-    constructor(comment:string, ordererid:number, OrderItems: OrderItemDTO[], restId:number) {
-        this.Id = 0;
-        this.OrdererId = ordererid;
-        this.DeliveryId = -1;
-        this.RestaurantId = restId;
-        this.TimeOfOrder = new Date();
-        this.Comment = comment;
-        this.OrderItems = OrderItems;
+    id:number;
+    ordererId:number;
+    deliveryId:number;
+    restaurantId:number;
+    timeOfOrder:Date;
+    comment: string;
+    orderItems: OrderItemDTO[];
+    status : string;
+
+    constructor(comment:string, ordererid:number, OrderItems: OrderItemDTO[], restId:number, status:string) {
+        this.id = 0;
+        this.ordererId = ordererid;
+        this.deliveryId = -1;
+        this.restaurantId = restId;
+        this.timeOfOrder = new Date();
+        this.comment = comment;
+        this.orderItems = OrderItems;
+        this.status = status;
     }
 }

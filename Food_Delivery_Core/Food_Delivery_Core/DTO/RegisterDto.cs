@@ -13,6 +13,8 @@
         public DateTime DoB { get; set; }
         public string UserType { get; set; }
 
+        public bool IsVerified { get; set; }
+
 
 
     }

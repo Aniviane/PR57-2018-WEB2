@@ -5,15 +5,15 @@ export class OrderItemDTO {
 
     //     public string DishComment { get; set; }
 
-    Id : number;
-    DishId : number;
-    OrderId : number;
-    DishComment : string;
+    id : number;
+    dishId : number;
+    orderId : number;
+    dishComment : string;
 
     constructor(dish:number,comment:string) {
-        this.Id = 0;
-        this.DishId = dish;
-        this.OrderId = 0;
-        this.DishComment = comment;
+        this.id = 0;
+        this.dishId = dish;
+        this.orderId = 0;
+        this.dishComment = comment;
     }
 }

@@ -9,16 +9,16 @@ export class RestaurantDTO {
     //     public List<DishDTO> Dishes { get; set; }
 
 
-    Id : number;
-    RestName : string;
-    Stars : number;
-    Dishes : DishDTO[];
+    id : number;
+    restName : string;
+    stars : number;
+    dishes : DishDTO[];
 
     constructor() {
-        this.Id = 0;
-        this.Stars = 0;
-        this.RestName = "";
-        this.Dishes = [];
+        this.id = 0;
+        this.stars = 0;
+        this.restName = "";
+        this.dishes = [];
     }
 
 }

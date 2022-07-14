@@ -1,1 +1,20 @@
  <p>admin works! {{Id}}</p>
+
+
+
+
+
+ <div>
+    <table class="table table-striped">
+     <tr *ngFor="let rest of Users|async">
+         <td>{{rest.username}}</td>
+         <td>{{rest.fullName}}</td>
+         <td>{{rest.email}}</td>
+         <td *ngIf="rest.isVerified"><p> Verified! </p></td>
+         <td *ngIf="!rest.isVerified"><button (click)="Verify(rest.id)">VERIFY</button>></td>
+         <button (click)="DeleteUser(rest.id)">Delete this user</button>
+     </tr>
+    </table>
+ 
+ 
+ </div>

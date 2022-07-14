@@ -5,14 +5,14 @@ export class DishDTO {
     //     public int Price { get; set; }
 
     //     public long RestaurantId { get; set; }
-    Id : number;
-    DishName : string;
+    id : number;
+    dishName : string;
     price: number;
-    RestaurantId : number;
+    restaurantId : number;
     constructor() {
-        this.Id = 0;
-        this.DishName ="";
+        this.id = 0;
+        this.dishName ="";
         this.price = 0;
-        this.RestaurantId = 0;
+        this.restaurantId = 0;
     }
 }

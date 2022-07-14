@@ -14,7 +14,7 @@ export class OrdererComponent implements OnInit {
   @Input() Id! : number;
   RestID! : number;
 
-  Restaurants! : Observable<any[]>;
+  Restaurants! : Observable<RestaurantDTO[]>;
   Dishes! : DishDTO[];
   Restaurant! : RestaurantDTO;
 
@@ -22,19 +22,43 @@ export class OrdererComponent implements OnInit {
 
   ngOnInit(): void {
     this.Restaurants = this.service.getRestaurants();
-    console.log(this.Restaurants)
+    
   }
 
   orderFrom(id:number): void {
-    this.RestID = id;
-    let r;
-    this.Restaurants.subscribe(Restaurant => Restaurant.forEach(this.getRest));
-    console.log(this.Dishes)
-  }
-  getRest(rest:RestaurantDTO) : void {
-    if(rest.Id == this.RestID){
-      this.Restaurant = rest;
-      this.Dishes = rest.Dishes;
+   
+   console.log(id);
+   console.log(this.Dishes)
+    
+   let l!: RestaurantDTO[];
+   this.Restaurants.subscribe(
+    o =>{ 
+      this.getRest(o,id);
     }
+   );
+   
+   
+    //console.log(this.Dishes)
+    
+  }
+ 
+  getRest(rest:RestaurantDTO[], id:number) : void {
+   
+   
+      rest.forEach(element => {
+        console.log(element.id,id)
+        if(element.id == id){
+          console.log('hit');
+          this.Dishes = element.dishes;
+          console.log(this.Dishes);
+          
+        }
+
+        
+      });
+
+      console.log(this.Dishes);
+
+   
   }
 }

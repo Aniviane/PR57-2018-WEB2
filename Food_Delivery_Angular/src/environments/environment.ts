@@ -3,9 +3,13 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+ 
 };
 
+ export const UserUrl =  "https://localhost:7036/"
+ export const RestUrl = "https://localhost:7036/api/Restaurants"
+ export const  OrderUrl = "https://localhost:7036/api/Orders";
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

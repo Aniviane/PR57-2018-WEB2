@@ -11,6 +11,7 @@ using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using MailKit;
 using MimeKit;
+using Org.BouncyCastle.Crypto.Generators;
 
 namespace Food_Delivery_Core.Services
 {
@@ -30,8 +31,8 @@ namespace Food_Delivery_Core.Services
             User u = _mapper.Map<User>(registerDTO);
 
             //var b = (_context.Users?.Any(e => e.Username == registerDTO.Username)).GetValueOrDefault();
-            u.Password = u.Password.GetHashCode().ToString();
-
+            u.Password = BCrypt.Net.BCrypt.HashPassword(u.Password);
+            
             _context.Users.Add(u);
             _context.SaveChanges();
 
@@ -85,11 +86,19 @@ namespace Food_Delivery_Core.Services
 
             var users = _context.Users;
             User? u = null;
-            u = users.Where(o => o.Username == userLoginDto.Username && o.Password == userLoginDto.Password.GetHashCode().ToString()).First();
+            u = users.Where(o => o.Email == userLoginDto.Username).First();
 
             if (u == null)
             {
                 return null;
+            }
+
+            
+
+
+            if (!BCrypt.Net.BCrypt.Verify(userLoginDto.Password, u.Password))
+            {
+                return new List<string> { "WRONG PASSWORD" };
             }
 
             List < Claim > claims = new List<Claim>();
@@ -145,9 +154,12 @@ namespace Food_Delivery_Core.Services
 
         public void VerifyUser(long id)
         {
-            var user = _context.Users.Find(id);
-            user.IsVerified = true;
-            _context.SaveChanges();
+            var users = _context.Users;
+                if (users.Where(o => o.Id == id) != null) {
+                var user = users.Find(id);
+                user.IsVerified = true;
+                _context.SaveChanges();
+            }
 
 
         }
@@ -158,7 +170,7 @@ namespace Food_Delivery_Core.Services
         private void SendEmail(string mail)
         {
            var email = new MimeMessage();
-            email.From.Add()
+            
 
         }
     } 
