@@ -34,6 +34,7 @@ export class AppComponent {
     
      let ret = this.service.login(call);
       ret.subscribe( ret => {
+        console.log(ret);
        this.Id = ret[0];
        this.UserType = ret[1];
        localStorage.setItem('token',ret[2]);

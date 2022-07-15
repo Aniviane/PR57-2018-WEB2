@@ -63,7 +63,7 @@
           <label>Username: </label>
           <input type="text" #user ><br>
           <label>Password: </label>
-          <input type="password" #pass ><br>
+          <input type="password" #password ><br>
           <label>Confirm Password: </label>
           <input type="password" #conf><br>
           <label>Email: </label>
@@ -85,7 +85,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="Register(user.value,pass.value,conf.value,mail.value,fname.value,adress.value,day.valueAsNumber,month.valueAsNumber,year.valueAsNumber,type.value)">Registration</button>
+        <button type="button" class="btn btn-primary" (click)="Register(user.value,password.value,conf.value,mail.value,fname.value,adress.value,day.valueAsNumber,month.valueAsNumber,year.valueAsNumber,type.value)">Registration</button>
       </div>
     </div>
   </div>

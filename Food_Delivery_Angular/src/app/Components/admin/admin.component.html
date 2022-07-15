@@ -11,7 +11,7 @@
          <td>{{rest.fullName}}</td>
          <td>{{rest.email}}</td>
          <td *ngIf="rest.isVerified"><p> Verified! </p></td>
-         <td *ngIf="!rest.isVerified"><button (click)="Verify(rest.id)">VERIFY</button>></td>
+         <td *ngIf="!rest.isVerified"><button (click)="Verify(rest.id)">VERIFY</button></td>
          <button (click)="DeleteUser(rest.id)">Delete this user</button>
      </tr>
     </table>

@@ -20,11 +20,11 @@ export class DelivererComponent implements OnInit {
   activeOrder! : OrderDTO;
   active! : boolean;
 
+
+
+
   constructor(private service:RestaurantService, private orderService:OrderService) { 
-this.Restaurants = this.service.getRestaurants();
-this.AllOrders = orderService.getOrders();
-this.MyOrders = orderService.getMyOrders(this.Id);
-    this.MyOrders.subscribe(item => item.forEach(this.checkOrder));
+
 
   }
 
@@ -35,9 +35,23 @@ this.MyOrders = orderService.getMyOrders(this.Id);
 
     }
   }
+
+ acceptOrder(id:number):void {
+    this.orderService.acceptOrder(id);
+ }
+
+
   ngOnInit(): void {
+    console.log(this.Id, ' lol');
     this.Restaurants = this.service.getRestaurants();
-    console.log(this.Restaurants)
+    this.AllOrders = this.orderService.getOrders();
+    this.AllOrders.subscribe(o => {
+      console.log(o);
+    });
+
+    this.MyOrders = this.orderService.getMyOrders(this.Id);
+    this.MyOrders.subscribe(item => item.forEach(this.checkOrder));
+    
   }
 
 }

@@ -14,5 +14,14 @@
 
 </div>
 
+<div *ngIf="ordering == true">
+<table>
+    <tr *ngFor="let dish of Dishes">
+        <td>{{dish.dishName}}</td>
+        <td>{{dish.price}}</td>
+        <button (click)="addToCart(dish.id)">Add To Cart</button>
+    </tr>
+</table>
+</div>
 
-
+<button *ngIf="Dishes != []" class="btn btn-primary" (click)="Order()">Finish Order</button>

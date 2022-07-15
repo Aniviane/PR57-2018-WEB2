@@ -55,11 +55,27 @@ namespace Food_Delivery_Core.Services
             return;
         }
 
-        public OrderDTO GetById(long id)
+        public List<OrderDTO> GetById(long id)
         {
-            var ret =_mapper.Map<OrderDTO>(_context.Orders.Find(id));
-            List<OrderItem> OIs = _context.OrderItems.Where(o => o.OrderId == id).ToList();
-            ret.OrderItems = _mapper.Map<List<OrderItemDTO>>(OIs);
+            var users = _mapper.Map<List<OrderDTO>>(_context.Orders);
+            var ret = users.Where(o => o.OrdererId == id || o.DeliveryId == id).ToList();
+            List<OrderItemDTO> ois = _mapper.Map<List<OrderItemDTO>>(_context.OrderItems.ToList());
+
+            foreach (var v in ret)
+            {
+                List<OrderItemDTO> OIs = ois.Where(o => o.OrderId == v.Id).ToList();
+                //if(OIs != null)
+                //{
+                //    foreach( var e in OIs)
+                //    {
+                //        if(v.OrderItems.Find( o => o.Id == e.Id) == null)
+                //        {
+                //            v.OrderItems.Add(e);
+                //        }
+                //    }
+                //}
+                v.OrderItems = OIs;
+            }
             return ret;
         }
 

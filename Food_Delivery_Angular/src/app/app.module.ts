@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -9,6 +9,7 @@ import { UserServiceService } from './Services/user-service.service';
 import { OrdererComponent } from './Components/orderer/orderer.component';
 import { DelivererComponent } from './Components/deliverer/deliverer.component';
 import { AdminComponent } from './Components/admin/admin.component';
+import { TokenInterceptor } from './token.interceptor';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { AdminComponent } from './Components/admin/admin.component';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [UserServiceService],
+  providers: [UserServiceService, {provide: HTTP_INTERCEPTORS,useClass: TokenInterceptor,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

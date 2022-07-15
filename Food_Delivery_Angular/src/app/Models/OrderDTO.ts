@@ -17,7 +17,7 @@ export class OrderDTO {
     id:number;
     ordererId:number;
     deliveryId:number;
-    restaurantId:number;
+    restorauntId:number;
     timeOfOrder:Date;
     comment: string;
     orderItems: OrderItemDTO[];
@@ -27,7 +27,7 @@ export class OrderDTO {
         this.id = 0;
         this.ordererId = ordererid;
         this.deliveryId = -1;
-        this.restaurantId = restId;
+        this.restorauntId= restId;
         this.timeOfOrder = new Date();
         this.comment = comment;
         this.orderItems = OrderItems;

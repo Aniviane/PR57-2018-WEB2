@@ -36,7 +36,7 @@ namespace Food_Delivery_Core.Controllers
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
-        public ActionResult<OrderDTO> GetOrder(long id)
+        public ActionResult<List<OrderDTO>> GetOrder(long id)
         {
 
             return Ok(_orderService.GetById(id));

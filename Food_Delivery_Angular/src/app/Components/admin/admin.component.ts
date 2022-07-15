@@ -1,3 +1,4 @@
+import { HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OrderDTO } from 'src/app/Models/OrderDTO';
@@ -28,19 +29,19 @@ export class AdminComponent implements OnInit {
   }
 
   Verify(id:number):void {
-    if(localStorage.getItem('token') == "NoToken"){
-      alert("TOKEN ERROR") 
-    }else {
+   
     this.userService.verifyUser(id);
-    }
+    
   }
 
   DeleteUser(id:number):void {
-    if(localStorage.getItem('token') == "NoToken"){
-      alert("TOKEN ERROR") 
-    }else {
+    
+  
+      console.log("will delete" + id);
+      
+      
     this.userService.deleteUser(id);
-    }
+    
   }
 
 }

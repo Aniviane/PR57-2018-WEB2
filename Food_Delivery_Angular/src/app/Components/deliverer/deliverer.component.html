@@ -1,1 +1,19 @@
 <p>deliverer works! {{Id}}</p>
+
+
+
+<table >
+<tr *ngFor="let order of AllOrders|async">
+<td> {{order.restorauntId}} </td>
+<td> {{order.timeOfOrder}} </td>
+<td> {{order.comment}} </td>
+<td *ngFor="let item of order.orderItems">
+    <p>{{item.dishId}}  </p>
+
+</td>
+<td *ngIf="order.status == 'Available'"> <button (click)="acceptOrder(order.id)">Accept Order</button></td>
+<td *ngIf="order.status == 'Accepted'"> <p>Accepted</p></td>
+<td *ngIf="order.status == 'Delivered'"> <p>Delivered</p></td>
+</tr>
+
+</table>
